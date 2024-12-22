@@ -5,44 +5,54 @@ using UnityEngine;
 public class NeuralNetwork : MonoBehaviour
 {
 
-    //public Layer hiddenLayer1;
-    //public Layer hiddenLayer2;
-    //public Layer outputLayer;
+    public int[] networkShape = { 2, 4, 4, 2 };
+    public Layer[] layers;
 
-    
-    public class Layer
+    public void Awake()
     {
-        public Layer hiddenLayer1;
-        public Layer hiddenLayer2;
-        public Layer outputLayer;
+        layers = new Layer[networkShape.Length - 1];
 
-
-        public float[,] weightsArray;
-        public float[] biasesArray;
-        public float[] nodeArray;
-
-        private int n_nodes;
-        private int n_inputs;
-
-        public Layer(int n_inputs, int n_nodes)
+        for (int i = 0; i < layers.Length; i++)
         {
-            weightsArray = new float[n_nodes, n_inputs];
-            biasesArray = new float [n_nodes];
-            biasesArray = new float [n_nodes];
-
-            this.n_nodes = n_nodes;
-            this.n_inputs = n_inputs;
+            layers[i] = new Layer(networkShape[i], networkShape[i + 1]);
         }
-
-        public void Awake()
-        {
-            hiddenLayer1 = new Layer(2, 4);
-            hiddenLayer2 = new Layer(4, 4);
-            outputLayer = new Layer(4, 2);
-
-        }
-
-
-
     }
+
+    public float[] Brain(float[] inputs)
+    {
+        for (int i = 0; i < layers.Length; i++)
+        {
+            if (i == 0)
+            {
+                layers[i].ForwardPass(inputs);
+                layers[i].ActivationFunction();
+            }
+            else if (i == layers.Length - 1)
+
+            {
+                layers[i].ForwardPass(layers[i - 1].nodeArray);
+            }
+            else
+            {
+                layers[i].ForwardPass(layers[i - 1].nodeArray);
+                layers[i].ActivationFunction();
+            }
+        }
+
+        return layers[layers.Length - 1].nodeArray;
+    }
+
+    public Layer[] CopyLayers()
+    {
+        Layer[] tempLayers = new Layer[layers.Length-1];
+        for (int i = 0; i < layers.Length; i++)
+        {
+            tempLayers[i] = new Layer(networkShape[i], networkShape[i + 1]);
+            System.Array.Copy (layers[i].weightsArray, tempLayers[i].weightsArray, layers[i].weightsArray.GetLength(0) * layers[i].weightsArray.GetLength(1));
+            System.Array.Copy(layers[i].biasesArray, tempLayers[i].biasesArray, layers[i].biasesArray.GetLength(0));
+        }
+
+        return tempLayers;
+    }
+  
 }
