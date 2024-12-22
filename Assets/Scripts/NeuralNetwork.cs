@@ -5,7 +5,7 @@ using UnityEngine;
 public class NeuralNetwork : MonoBehaviour
 {
 
-    public int[] networkShape = { 2, 4, 4, 2 };
+    public int[] networkShape = { 6, 32, 2 };
     public Layer[] layers;
 
     public void Awake()
@@ -54,5 +54,14 @@ public class NeuralNetwork : MonoBehaviour
 
         return tempLayers;
     }
-  
+
+
+    public void MutateNetwork(float mutationChance, float mutationAmount)
+    {
+        for (int i = 0; i < layers.Length; i++)
+        {
+            layers[i].MutateLayer(mutationChance, mutationAmount);
+        }
+    }
+
 }
