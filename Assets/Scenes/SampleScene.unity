@@ -355,8 +355,8 @@ MonoBehaviour:
   spawnRate: 1
   floorScale: 1
   foodPrefab: {fileID: 5765477316508922201, guid: b9304e576478fc740a03575f7440d648, type: 3}
-  timeElapsed: 0
   nrFoodStart: 100
+  foodParent: {fileID: 0}
 --- !u!4 &824169801
 Transform:
   m_ObjectHideFlags: 0
@@ -814,6 +814,52 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1431823377}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1456596300
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1456596302}
+  - component: {fileID: 1456596301}
+  m_Layer: 0
+  m_Name: AgentSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1456596301
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1456596300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 307ea7c3141918746ba84814e2d5c6da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  agentPrefab: {fileID: 4069871864752765105, guid: d18b0638d43256946a3e5841229439ad, type: 3}
+  floorScale: 1
+--- !u!4 &1456596302
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1456596300}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.6888585, y: -10.736611, z: -12.333662}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1463472309
 GameObject:
   m_ObjectHideFlags: 0
@@ -1044,3 +1090,4 @@ SceneRoots:
   - {fileID: 2124052653}
   - {fileID: 469500400546519821}
   - {fileID: 824169801}
+  - {fileID: 1456596302}

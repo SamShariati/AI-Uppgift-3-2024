@@ -8,16 +8,9 @@ public class AgentManager : MonoBehaviour
     
     public GameObject agentPrefab;
     public NeuralNetwork nn;
-    float agent_LR;
-    float agent_FB;
-
-    public float maxHealth;
-    public float currentHealth;
-    public float rotationSpeed;
 
     public float totalEnergy;
     public float foodValue;
-    public float reproductionCost;
     public int nrFoodBeforeProduce;
     public int nrFoodEaten;
     public int maxChildren;
@@ -38,7 +31,7 @@ public class AgentManager : MonoBehaviour
 
     private void Awake()
     {
-        currentHealth = maxHealth;
+
         movement = GetComponent<MoveAgent>();
         nn = GetComponent<NeuralNetwork>();
     }
@@ -75,7 +68,8 @@ public class AgentManager : MonoBehaviour
         {
             totalEnergy += foodValue;
             nrFoodEaten += 1;
-            Destroy(gameObject);
+            SpawnFood.SpawnFoodPellet();
+            Destroy(collider.gameObject);
         }
     }
 
@@ -85,9 +79,7 @@ public class AgentManager : MonoBehaviour
 
         if (totalEnergy <= 0)
         {
-            this.transform.Rotate(0, 0, 90);
-            Destroy(this.gameObject, 3);
-            movement.enabled = false;
+            Destroy(gameObject);
         }
     }
 
@@ -96,7 +88,10 @@ public class AgentManager : MonoBehaviour
         for (int i = 0; i < maxChildren; i++)
         {
             GameObject child = Instantiate(agentPrefab, this.transform.position, Quaternion.identity);
-            child.GetComponent<NeuralNetwork>().layers = nn.CopyLayers();
+            NeuralNetwork child_NN = child.GetComponent<NeuralNetwork>();
+            child_NN.layers = nn.CopyLayers();
+            AgentSpawner.lastSavedNN = child_NN;
+            AgentSpawner.logsSaved++;
             nrOfChildren++;
         }
     }

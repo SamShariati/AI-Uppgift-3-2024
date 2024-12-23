@@ -10,6 +10,9 @@ public class MoveAgent : MonoBehaviour
     public float speed = 10.0F;
     public float rotateSpeed = 10.0F;
 
+    public float agent_FB;
+    public float agent_LR;
+
     private void Awake()
     {
         agent = GetComponent<AgentManager>(); 
@@ -19,8 +22,8 @@ public class MoveAgent : MonoBehaviour
     public void Move(float FB, float LR)
     {
         //clamp the values of LR and FB
-        LR = Mathf.Clamp(LR, -1, 1);
-        FB = Mathf.Clamp(FB, 0, 1);
+        agent_LR = Mathf.Clamp(LR, -1, 1);
+        agent_FB = Mathf.Clamp(FB, 0, 1);
 
         //move the agent
         if (!agent.isDead)
@@ -30,7 +33,7 @@ public class MoveAgent : MonoBehaviour
 
             // Move forward / backward
             Vector3 forward = transform.TransformDirection(Vector3.forward);
-            cc.SimpleMove(forward * speed * FB * -1);
+            cc.SimpleMove(forward * speed * agent_FB * -1);
         }
     }
 }

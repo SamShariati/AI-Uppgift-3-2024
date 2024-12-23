@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class NeuralNetwork : MonoBehaviour
 {
+    //Buggar dessa värden reseta i inspectorn
+    [HideInInspector] public int[] networkShape = { 6, 32, 2 };
+    [HideInInspector] public Layer[] layers;
 
-    public int[] networkShape = { 6, 32, 2 };
-    public Layer[] layers;
-
-    public void Awake()
+    public void Start()
     {
         layers = new Layer[networkShape.Length - 1];
 
