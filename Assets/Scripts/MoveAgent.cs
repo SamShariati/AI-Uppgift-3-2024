@@ -5,10 +5,9 @@ public class MoveAgent : MonoBehaviour
 
     AgentManager agent;
     CharacterController cc;
-    ObjectTracker objectTracker;
 
     public float speed = 10.0F;
-    public float rotateSpeed = 10.0F;
+    public float rotateSpeed = 1.0F;
 
     public float agent_FB;
     public float agent_LR;
@@ -23,7 +22,7 @@ public class MoveAgent : MonoBehaviour
     {
         //clamp the values of LR and FB
         agent_LR = Mathf.Clamp(LR, -1, 1);
-        agent_FB = Mathf.Clamp(FB, 0, 1);
+        agent_FB = Mathf.Clamp(FB, 0, 1.75f);
 
         //move the agent
         if (!agent.isDead)

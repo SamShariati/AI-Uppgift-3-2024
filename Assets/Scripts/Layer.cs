@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static UnityEditor.Experimental.GraphView.GraphView;
 
-public class Layer : MonoBehaviour
+public class Layer
 {
 
     public float[,] weightsArray; //värden för kopplingar
@@ -31,7 +31,7 @@ public class Layer : MonoBehaviour
         for (int i = 0; i < n_nodes; i++)
         {
 
-            for (int j = 0; j <n_inputs; j++)
+            for (int j = 0; j < n_inputs; j++)
             {
                 nodeArray[i] += weightsArray[i, j] * inputsArray[j];
             }
@@ -43,7 +43,7 @@ public class Layer : MonoBehaviour
     //Aktiveringsfunktion för varje nod
     public void ActivationFunction()
     {
-        for (int i= 0; i < n_nodes; i++)
+        for (int i = 0; i < n_nodes; i++)
         {
             if (nodeArray[i] <= 0)
             {
@@ -70,4 +70,5 @@ public class Layer : MonoBehaviour
             }
         }
     }
+    
 }

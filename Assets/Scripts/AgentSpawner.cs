@@ -6,33 +6,42 @@ public class AgentSpawner : MonoBehaviour
 {
     public GameObject agentPrefab;
     private GameObject[] agentList;
-    public int floorScale = 1;
-    public static NeuralNetwork lastSavedNN;
-    public static int logsSaved;
+    public NeuralNetwork lastSavedNN;
+    public int generationSaved;
 
+    float generationValue;
+    float lastSavedTime;
+    float delay = 3;
 
     private void Start()
     {
-        lastSavedNN = new NeuralNetwork();
+        lastSavedNN = GetComponent<NeuralNetwork>();
     }
 
     void FixedUpdate()
     {
         agentList = GameObject.FindGameObjectsWithTag("Agent");
 
-        // if there are no agents in the scene, spawn one at a random location. 
-        // This is to ensure that there is always at least one agent in the scene.
         if (agentList.Length < 1)    
         {
-            SpawnAgent();
-            Debug.Log(logsSaved);
+            SpawnAgent();      
         }
     }
-
     void SpawnAgent()
     {
-        GameObject backupChild = Instantiate(agentPrefab, new Vector3(0,0,0),Quaternion.identity);
-        NeuralNetwork backupNN = backupChild.GetComponent<NeuralNetwork>();
-        backupNN.layers = lastSavedNN.layers;
+        // Instantiate a new agent
+        GameObject backupChild = Instantiate(agentPrefab, new Vector3(0, 1.5f, 0), Quaternion.identity);
+
+
+        // Check if a saved neural network exists
+        if (generationSaved != 0)
+        {
+            NeuralNetwork backupNN = backupChild.GetComponent<NeuralNetwork>();
+            AgentManager backupM = backupChild.GetComponent<AgentManager>();
+            backupNN.layers = lastSavedNN.CopyLayers();
+            backupNN.NN_ID = lastSavedNN.CopyID();
+            backupM.generation = generationSaved;
+
+        }
     }
 }

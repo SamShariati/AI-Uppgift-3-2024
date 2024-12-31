@@ -1,14 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
-public class NeuralNetwork : MonoBehaviour
+public class NN : MonoBehaviour
 {
-    //Buggar dessa värden reseta i inspectorn
-    int[] networkShape = { 6, 32, 2 };
+    int[] networkShape = { 5, 32, 2 };
     public Layer[] layers;
-    public int NN_ID;
 
     public void Awake()
     {
@@ -18,11 +15,12 @@ public class NeuralNetwork : MonoBehaviour
         {
             layers[i] = new Layer(networkShape[i], networkShape[i + 1]);
         }
-        NN_ID = Random.Range(1, 1000);
-        //Debug.Log(NN_ID);
-    }
-    
 
+        //This ensures that the random numbers we generate aren't the same pattern each time. 
+        Random.InitState((int)System.DateTime.Now.Ticks);
+    }
+
+    //This function is used to feed forward the inputs through the network, and return the output, which is the decision of the network, in this case, the direction to move in.
     public float[] Brain(float[] inputs)
     {
         for (int i = 0; i < layers.Length; i++)
@@ -33,7 +31,6 @@ public class NeuralNetwork : MonoBehaviour
                 layers[i].ActivationFunction();
             }
             else if (i == layers.Length - 1)
-
             {
                 layers[i].ForwardPass(layers[i - 1].nodeArray);
             }
@@ -44,27 +41,23 @@ public class NeuralNetwork : MonoBehaviour
             }
         }
 
-        return layers[layers.Length - 1].nodeArray;
+        return (layers[layers.Length - 1].nodeArray);
     }
 
-
-    public Layer[] CopyLayers()
+    //This function is used to copy the weights and biases from one neural network to another.
+    public Layer[] copyLayers()
     {
-        Layer[] tempLayers = new Layer[networkShape.Length - 1];
+        Layer[] tmpLayers = new Layer[networkShape.Length - 1];
         for (int i = 0; i < layers.Length; i++)
         {
-            tempLayers[i] = new Layer(networkShape[i], networkShape[i + 1]);
-            System.Array.Copy(layers[i].weightsArray, tempLayers[i].weightsArray, layers[i].weightsArray.GetLength(0) * layers[i].weightsArray.GetLength(1));
-            System.Array.Copy(layers[i].biasesArray, tempLayers[i].biasesArray, layers[i].biasesArray.GetLength(0));
+            tmpLayers[i] = new Layer(networkShape[i], networkShape[i + 1]);
+            System.Array.Copy(layers[i].weightsArray, tmpLayers[i].weightsArray, layers[i].weightsArray.GetLength(0) * layers[i].weightsArray.GetLength(1));
+            System.Array.Copy(layers[i].biasesArray, tmpLayers[i].biasesArray, layers[i].biasesArray.GetLength(0));
         }
-
-        return tempLayers;
-    }
-    public int CopyID()
-    {
-        return NN_ID;
+        return (tmpLayers);
     }
 
+    //Call the randomness function for each layer in the network.
     public void MutateNetwork(float mutationChance, float mutationAmount)
     {
         for (int i = 0; i < layers.Length; i++)
@@ -72,6 +65,4 @@ public class NeuralNetwork : MonoBehaviour
             layers[i].MutateLayer(mutationChance, mutationAmount);
         }
     }
-
-
 }

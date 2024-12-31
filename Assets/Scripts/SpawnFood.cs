@@ -9,9 +9,7 @@ public class SpawnFood : MonoBehaviour
     public float spawnRate = 1;
     public int floorScale = 1;
     public GameObject foodPrefab;
-    private float timeElapsed = 0;
     public int nrFoodStart;
-    private float lastFoodSpawned = 0;
     public Transform foodParent;
 
     private void Awake()
