@@ -22,7 +22,7 @@ public class MoveAgent : MonoBehaviour
     {
         //clamp the values of LR and FB
         agent_LR = Mathf.Clamp(LR, -1, 1);
-        agent_FB = Mathf.Clamp(FB, 0, 1.75f);
+        agent_FB = Mathf.Clamp(FB, 0, 2.5f);
 
         //move the agent
         if (!agent.isDead)
