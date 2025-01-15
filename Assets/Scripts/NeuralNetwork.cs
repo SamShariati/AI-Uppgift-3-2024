@@ -27,16 +27,19 @@ public class NeuralNetwork : MonoBehaviour
     {
         for (int i = 0; i < layers.Length; i++)
         {
+            //indata
             if (i == 0)
             {
                 layers[i].ForwardPass(inputs);
                 layers[i].ActivationFunction();
             }
+            //utdata
             else if (i == layers.Length - 1)
 
             {
                 layers[i].ForwardPass(layers[i - 1].nodeArray);
             }
+            //dold
             else
             {
                 layers[i].ForwardPass(layers[i - 1].nodeArray);
